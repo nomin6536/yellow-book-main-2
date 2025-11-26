@@ -1,4 +1,5 @@
-export async function GET(request: Request) {
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export async function GET() {
   return new Response('Hello, from API!');
 }
 // apps/web/src/app/api/revalidate/route.ts

@@ -3,7 +3,7 @@ import CategoryCarousel from './components/Category';
 import TopRating from './components/TopRating';
 import AllBusinessesMarquee from './components/AllBusinesses';
 import SearchSection from './components/SearchBar';
-import { Category, Business } from '../../../../libs/contract/src/index';
+import type { Business, Category } from '@yellow/contract';
 
 async function fetchCategories(): Promise<Category[]> {
   const res = await fetch('http://localhost:5050/categories', { cache: 'no-store' });
@@ -22,13 +22,11 @@ async function fetchAllBusinesses(): Promise<Business[]> {
 export default async function HomePage() {
   let categories: Category[] = [];
   let allBusinesses: Business[] = [];
-  let fetchError: string | null = null;
 
   try {
     [categories, allBusinesses] = await Promise.all([fetchCategories(), fetchAllBusinesses()]);
   } catch (err) {
     console.error(err);
-    fetchError = 'Мэдээлэл татахад алдаа гарлаа';
   }
 
   return (

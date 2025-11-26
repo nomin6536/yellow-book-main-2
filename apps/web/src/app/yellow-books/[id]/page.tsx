@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // apps/web/src/app/yellow-books/[id]/page.tsx
 // SSG page for /yellow-books/[id] — generateStaticParams + force static output
 export const dynamic = 'force-static';
