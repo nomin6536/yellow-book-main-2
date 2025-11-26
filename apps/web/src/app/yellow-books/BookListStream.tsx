@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // apps/web/src/app/yellow-books/BookListStream.tsx
 // Streamed async server component — ISR-updated (revalidate=60)
 import React from 'react';
