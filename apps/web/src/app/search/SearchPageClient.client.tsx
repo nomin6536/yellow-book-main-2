@@ -54,13 +54,8 @@ export default function SearchPageClient({ initialBusinesses, initialQuery = '',
         <SearchBar {...({ onSearch: handleSearch, onSelect: handleSelect, suggestions } as any)} />
         <div className="mt-6 space-y-4">
           {businesses.map((b) => (
-            <OrganizationCard
-              key={b.id}
-              id={b.id}
-              name={b.name}
-              rating={b.rating ?? 0}
-              imageUrl={(b as any).imageUrl ?? undefined}
-            />
+           <OrganizationCard business={b} />
+
           ))}
           {businesses.length === 0 && <p className="text-white/60 mt-6">Хайлтанд тохирох бизнес олдсонгүй.</p>}
         </div>
