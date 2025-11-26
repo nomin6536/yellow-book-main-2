@@ -5,6 +5,8 @@ import AllBusinessesMarquee from './components/AllBusinesses';
 import SearchSection from './components/SearchBar';
 import type { Business, Category } from '@yellow/contract';
 
+export const dynamic = 'force-dynamic';
+
 async function fetchCategories(): Promise<Category[]> {
   const res = await fetch('http://localhost:5050/categories', { cache: 'no-store' });
   if (!res.ok) throw new Error(`Category fetch failed: ${res.status}`);
