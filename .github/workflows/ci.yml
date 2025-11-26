@@ -39,3 +39,7 @@ jobs:
 
       - run: npx nx fix-ci
         if: always()
+
+      - run: npm install -g wait-on
+      - run: nx serve @yellow/api &
+      - run: wait-on http://localhost:5050/businesses
