@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Category {
@@ -23,6 +24,7 @@ model Business {
   location     String
   facebookUrl  String?
   instagramUrl String?
+  logoUrl      String?
   timetable    String
   categoryId   String
   rating       Int?

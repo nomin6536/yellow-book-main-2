@@ -23,6 +23,7 @@ export const BusinessSchema = z.object({
   categoryId: z.string(),
   topRating: z.boolean(),
   rating: z.int(),
+  logoUrl: z.string().url().optional(),
   latitude: z.number().optional(),
   longitude: z.number().optional(),
 });

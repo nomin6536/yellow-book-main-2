@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -45,8 +46,9 @@ async function main() {
       timetable: '10:00–22:00',
       rating: 5,
       topRating: true,
-       latitude: 47.9185,
+      latitude: 47.9185,
       longitude: 106.9178,
+      logoUrl: '/logos/modern_nomads.png',
     },
     {
       name: 'BD’s Mongolian BBQ',
@@ -63,6 +65,7 @@ async function main() {
       topRating: true,
       latitude: 47.9206,
       longitude: 106.9189,
+      logoUrl: '/logos/bds_mongolian_bbq.png',
     },
     {
       name: 'Khaan Deli',
@@ -79,6 +82,7 @@ async function main() {
       topRating: true,
       latitude: 47.9230,
       longitude: 106.9075,
+      logoUrl: '/logos/khaan_deli.png',
     },
     {
       name: 'Terelj Lodge',
@@ -95,6 +99,7 @@ async function main() {
       topRating: true,
       latitude: 47.8140,
       longitude: 107.3386,
+      logoUrl: '/logos/terelj_lodge.png',
     },
     {
       name: 'Veranda Restaurant',
@@ -111,6 +116,7 @@ async function main() {
       topRating: true,
       latitude: 47.9112,
       longitude: 106.9164,
+      logoUrl: '/logos/veranda_restaurant.png',
     },
     {
       name: 'Korean House',
@@ -127,6 +133,7 @@ async function main() {
       topRating: true,
       latitude: 47.9260,
       longitude: 106.9260,
+      logoUrl: '/logos/korean_house.png',
     },
     {
       name: 'Sakura Sushi',
@@ -143,6 +150,7 @@ async function main() {
       topRating: false,
       latitude: 47.9159,
       longitude: 106.9186,
+      logoUrl: '/logos/sakura_sushi.png',
     },
     {
       name: 'The Bull Hotpot',
@@ -159,6 +167,7 @@ async function main() {
       topRating: false,
       latitude: 47.8650,
       longitude: 106.8800,
+      logoUrl: '/logos/the_bull_hotpot.png',
     },
     {
       name: 'PizzaHut Mongolia',
@@ -175,6 +184,7 @@ async function main() {
       topRating: false,
       latitude: 47.92097573321183,
       longitude: 106.91909437648627,
+      logoUrl: '/logos/pizzahut_mongolia.png',
     },
     {
       name: 'Silk Road Tea House',
@@ -191,6 +201,7 @@ async function main() {
       topRating: false,
       latitude: 47.9148,
       longitude: 106.9183,
+      logoUrl: '/logos/silk_road_tea_house.png',
     },
   ];
   const libraries = [
@@ -207,6 +218,7 @@ async function main() {
       topRating: true,
        latitude: 47.9116,
       longitude: 106.9055,
+      logoUrl: '/logos/national_library.png',
     },
   ];
   const banks = [
@@ -223,6 +235,7 @@ async function main() {
       topRating: true,
       latitude: 47.9211,
       longitude: 106.9186,
+      logoUrl: '/logos/khaan_bank.png',
     },
   ];
   const shoppings = [
@@ -238,6 +251,7 @@ async function main() {
       topRating: true,
       latitude: 47.91694470102964, 
       longitude: 106.90611974425805,
+      rating: 5,
     },
   ];
   const hospitals = [
@@ -254,6 +268,7 @@ async function main() {
       topRating: false,
        latitude: 47.9440,
       longitude: 106.9120,
+      logoUrl: '/logos/ekh_nyalhas.png',
     },
   ];
 
