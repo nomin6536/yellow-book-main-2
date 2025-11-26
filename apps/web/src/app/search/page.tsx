@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const dynamic = 'force-dynamic';
 
 import SearchPageClient from './SearchPageClient.client';
-import { Business } from '../../../../../libs/contract/src/index';
+import type { Business } from '@yellow/contract';
 
 type Props = { searchParams?: { q?: string; id?: string } };
 

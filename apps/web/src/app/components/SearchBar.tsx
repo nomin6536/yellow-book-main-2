@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Category, Business } from '../../../../../libs/contract/src/index';
+import type { Business, Category } from '@yellow/contract';
 import { useRouter } from 'next/navigation';
 
 type Suggestion = {

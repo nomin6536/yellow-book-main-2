@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import React, { useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import SearchBar from '../components/SearchBar';
 import OrganizationCard from '../components/OrganizationCard';
 import MapIsland from './MapIsland.client';
-import { Business } from '../../../../../libs/contract/src/index';
+import type { Business } from '@yellow/contract';
 
 interface Props {
   initialBusinesses: Business[];

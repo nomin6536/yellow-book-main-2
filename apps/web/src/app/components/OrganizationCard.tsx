@@ -8,7 +8,7 @@ type Props = {
   imageUrl?: string;
 };
 
-export default function OrganizationCard({ id, name, rating, imageUrl }: Props) {
+export default function OrganizationCard({name, rating, imageUrl }: Props) {
   return (
     <div className="bg-white/10 backdrop-blur-md rounded-xl p-4 shadow-lg hover:scale-105 transition-transform duration-300 w-96"> 
       <div className="relative w-196 h-64 rounded-lg overflow-hidden mb-4">

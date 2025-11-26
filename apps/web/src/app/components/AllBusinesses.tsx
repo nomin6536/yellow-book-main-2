@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import { motion } from 'framer-motion';
 import { Business } from '@yellow/contract';
@@ -27,7 +28,7 @@ export default function AllBusinessesMarquee({ businesses }: AllBusinessesMarque
       <div className="relative w-full">
         <motion.div
           className="flex space-x-6"
-          variants={marqueeVariants}
+          variants={marqueeVariants as any}
           animate="animate"
         >
           {[...businesses, ...businesses].map((b, i) => (

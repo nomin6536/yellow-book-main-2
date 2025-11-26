@@ -1,12 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 import 'leaflet/dist/leaflet.css';
 import React, { useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { Business } from '../../../../../libs/contract/src/index';
+import { Business } from '@yellow/contract';
 
 // Fix default marker icons in Next.js/Next13
-// @ts-ignore
+
 const customIcon = new L.Icon({
   iconUrl: '/map.png',
   iconSize: [40, 41],
