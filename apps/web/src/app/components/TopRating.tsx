@@ -30,11 +30,8 @@ export default async function TopRating() {
           key={b.id}
           className={`${i % 2 === 0 ? 'self-end' : 'self-start'}`}
         >
-          <OrganizationCard
-            id={b.id}
-            name={b.name}
-            rating={b.rating}
-          />
+          <OrganizationCard business={b} />
+        
         </div>
       ))}
     </div>
