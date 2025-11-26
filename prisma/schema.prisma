@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id         String     @id @default(cuid())
+  name       String
+  businesses Business[]
+}
+
+model Business {
+  id           String   @id @default(cuid())
+  name         String   @unique
+  description  String
+  address      String
+  phone        String
+  email        String
+  website      String
+  location     String
+  facebookUrl  String?
+  instagramUrl String?
+  timetable    String
+  categoryId   String
+  rating       Int?
+  topRating    Boolean  @default(false)
+  latitude     Float?
+  longitude    Float?
+  category     Category @relation(fields: [categoryId], references: [id])
+}

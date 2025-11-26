@@ -1,0 +1,13 @@
+{
+  "name": "prisma",
+  "root": "prisma",
+  "projectType": "library",
+  "targets": {
+    "generate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx prisma generate"
+      }
+    }
+  }
+}
