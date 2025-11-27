@@ -48,7 +48,7 @@ async function main() {
       topRating: true,
       latitude: 47.9185,
       longitude: 106.9178,
-      logoUrl: '/logos/modern_nomads.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/Screenshot+2025-11-27+at+01.29.27.png',
     },
     {
       name: 'BD’s Mongolian BBQ',
@@ -65,7 +65,7 @@ async function main() {
       topRating: true,
       latitude: 47.9206,
       longitude: 106.9189,
-      logoUrl: '/logos/bds_mongolian_bbq.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/bbq.png',
     },
     {
       name: 'Khaan Deli',
@@ -82,7 +82,7 @@ async function main() {
       topRating: true,
       latitude: 47.9230,
       longitude: 106.9075,
-      logoUrl: '/logos/khaan_deli.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/Khaan+Deli.png',
     },
     {
       name: 'Terelj Lodge',
@@ -99,7 +99,7 @@ async function main() {
       topRating: true,
       latitude: 47.8140,
       longitude: 107.3386,
-      logoUrl: '/logos/terelj_lodge.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/tereljLodge.png',
     },
     {
       name: 'Veranda Restaurant',
@@ -116,7 +116,7 @@ async function main() {
       topRating: true,
       latitude: 47.9112,
       longitude: 106.9164,
-      logoUrl: '/logos/veranda_restaurant.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/verandaRestaurant.png',
     },
     {
       name: 'Korean House',
@@ -133,7 +133,7 @@ async function main() {
       topRating: true,
       latitude: 47.9260,
       longitude: 106.9260,
-      logoUrl: '/logos/korean_house.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/KoreaHouse.png',
     },
     {
       name: 'Sakura Sushi',
@@ -150,7 +150,7 @@ async function main() {
       topRating: false,
       latitude: 47.9159,
       longitude: 106.9186,
-      logoUrl: '/logos/sakura_sushi.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/sakura.png',
     },
     {
       name: 'The Bull Hotpot',
@@ -167,7 +167,7 @@ async function main() {
       topRating: false,
       latitude: 47.8650,
       longitude: 106.8800,
-      logoUrl: '/logos/the_bull_hotpot.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/BullHotpot.png',
     },
     {
       name: 'PizzaHut Mongolia',
@@ -184,7 +184,7 @@ async function main() {
       topRating: false,
       latitude: 47.92097573321183,
       longitude: 106.91909437648627,
-      logoUrl: '/logos/pizzahut_mongolia.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/pizzaHut.png',
     },
     {
       name: 'Silk Road Tea House',
@@ -201,7 +201,7 @@ async function main() {
       topRating: false,
       latitude: 47.9148,
       longitude: 106.9183,
-      logoUrl: '/logos/silk_road_tea_house.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/silkRodeSpices.png',
     },
   ];
   const libraries = [
@@ -218,7 +218,7 @@ async function main() {
       topRating: true,
        latitude: 47.9116,
       longitude: 106.9055,
-      logoUrl: '/logos/national_library.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/undesniiNomiinSan.jpg',
     },
   ];
   const banks = [
@@ -235,7 +235,7 @@ async function main() {
       topRating: true,
       latitude: 47.9211,
       longitude: 106.9186,
-      logoUrl: '/logos/khaan_bank.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/khanbank.jpg',
     },
   ];
   const shoppings = [
@@ -252,6 +252,7 @@ async function main() {
       latitude: 47.91694470102964, 
       longitude: 106.90611974425805,
       rating: 5,
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/ulsiinIhDelguur.jpg',
     },
   ];
   const hospitals = [
@@ -268,7 +269,7 @@ async function main() {
       topRating: false,
        latitude: 47.9440,
       longitude: 106.9120,
-      logoUrl: '/logos/ekh_nyalhas.png',
+      logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/ehnylhas.jpg',
     },
   ];
 
