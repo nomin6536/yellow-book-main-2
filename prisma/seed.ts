@@ -1,10 +1,59 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Role } from '@prisma/client';
+import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 const prisma = new PrismaClient();
-
+ 
 async function main() {
   console.log('🌱 Starting full reset & seeding...');
+
+  await embedAllBusinesses();
+  console.log('🧠 Business embeddings generated');
+
+  function cheapEmbedFromText(text: string): number[] {
+  const hash = crypto.createHash('sha256').update(text).digest();
+  const arr = Array.from(hash).concat(Array.from(hash)).slice(0, 128);
+  // normalize 0..255 -> -1..1
+  return arr.map((n) => (n / 127.5) - 1);
+}
+async function embedAllBusinesses() {
+  const all = await prisma.business.findMany();
+  for (const b of all) {
+    const basis = [b.name, b.description, b.location].filter(Boolean).join(' | ');
+    const vec = cheapEmbedFromText(basis);
+    await prisma.business.update({
+      where: { id: b.id },
+      data: { embedding: vec as any },
+    });
+  }
+}
+
+  // админ нууц үг hash
+  const adminPassHash = await bcrypt.hash('Admin123!', 10);
+
+  await prisma.user.upsert({
+    where: { email: 'admin@example.com' },
+    update: { role: Role.admin, name: 'Admin', passwordHash: adminPassHash },
+    create: {
+      email: 'admin@example.com',
+      name: 'Admin',
+      role: Role.admin,
+      image: null,
+      passwordHash: adminPassHash,
+    },
+  });
+await prisma.user.upsert({
+  where: { email: 'user@example.com' },
+  update: {},
+  create: {
+    email: 'user@example.com',
+    name: 'Regular User',
+    role: Role.user,
+    image: null,
+  },
+});
 
   // --- 0. Хуучин бүх өгөгдлийг устгах ---
   await prisma.business.deleteMany();
@@ -323,3 +372,7 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
+function embedAllBusinesses() {
+  throw new Error('Function not implemented.');
+}
+

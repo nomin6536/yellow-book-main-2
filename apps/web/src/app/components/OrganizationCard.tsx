@@ -23,7 +23,7 @@ export default function OrganizationCard({ business }: { business: Business }) {
         )}
       </div>
       <h3 className="text-xl font-semibold mb-2">{business.name}</h3>
-      <p className="text-yellow-400 font-bold">{'★'.repeat(Math.round(business.rating))}</p>
+      <p className="text-yellow-400 font-bold">{'★'.repeat(Math.round(business.rating ?? 0))}</p>
     </div>
   );
 }

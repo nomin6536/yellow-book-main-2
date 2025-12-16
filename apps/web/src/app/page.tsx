@@ -1,43 +1,62 @@
 import { Suspense } from 'react';
-import CategoryCarousel from './components/Category';
-import TopRating from './components/TopRating';
-import AllBusinessesMarquee from './components/AllBusinesses';
-import SearchSection from './components/SearchBar';
 import type { Business, Category } from '@yellow/contract';
+import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogoutButton';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import AllBusinessesMarquee from './components/AllBusinesses';
+import CategoryCarousel from './components/Category';
+import SearchSection from './components/SearchBar';
+import TopRating from './components/TopRating';
 
+// API-гаас SSR үеэр өгөгдөл авах
 export const dynamic = 'force-dynamic';
 
 async function fetchCategories(): Promise<Category[]> {
   const res = await fetch('http://localhost:5050/categories', { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Category fetch failed: ${res.status}`);
+  if (!res.ok) {
+    return [];
+  }
   const data: Category[] = await res.json();
   return data.map((c, i) => ({ ...c, imageUrl: `/category${i + 1}.jpg` }));
 }
 
 async function fetchAllBusinesses(): Promise<Business[]> {
   const res = await fetch('http://localhost:5050/businesses', { cache: 'no-store' });
-  if (!res.ok) throw new Error(`Business fetch failed: ${res.status}`);
+  if (!res.ok) {
+    return [];
+  }
   const data: Business[] = await res.json();
   return data;
 }
 
 export default async function HomePage() {
+
+  const session = await getServerSession(authOptions);
+
   let categories: Category[] = [];
   let allBusinesses: Business[] = [];
-
   try {
     [categories, allBusinesses] = await Promise.all([fetchCategories(), fetchAllBusinesses()]);
   } catch (err) {
-    console.error(err);
+    console.error('Failed to fetch data:', err);
   }
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-[#201235] via-[#2b1940] to-[#4b2f7a] text-white">
       <header className="max-w-6xl mx-auto flex items-center justify-between py-8 px-6">
         <div className="text-2xl font-semibold tracking-wider">ТАНИЛ</div>
-        <button className="px-4 py-2 rounded-full border border-white/20 hover:bg-white/10 transition">
-          НЭВТРЭХ
-        </button>
+        {session ? (
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-white/80">
+              {session.user?.name ?? session.user?.email}
+            </span>
+            {/* Админ бол badge харуулахыг хүсвэл: (session as any)?.role === 'admin' */}
+            <LogoutButton />
+          </div>
+        ) : (
+          <LoginButton />
+        )}
       </header>
 
       <main className="px-6">
