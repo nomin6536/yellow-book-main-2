@@ -5,19 +5,16 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
 const prisma = new PrismaClient();
- 
-async function main() {
-  console.log('🌱 Starting full reset & seeding...');
 
-  await embedAllBusinesses();
-  console.log('🧠 Business embeddings generated');
-
-  function cheapEmbedFromText(text: string): number[] {
+// --- Embedding helpers ---
+function cheapEmbedFromText(text: string, dim = 128): number[] {
   const hash = crypto.createHash('sha256').update(text).digest();
-  const arr = Array.from(hash).concat(Array.from(hash)).slice(0, 128);
-  // normalize 0..255 -> -1..1
-  return arr.map((n) => (n / 127.5) - 1);
+  const bytes = Array.from(hash);
+  const arr: number[] = [];
+  while (arr.length < dim) arr.push(...bytes);
+  return arr.slice(0, dim).map((n) => (n / 127.5) - 1);
 }
+
 async function embedAllBusinesses() {
   const all = await prisma.business.findMany();
   for (const b of all) {
@@ -28,11 +25,14 @@ async function embedAllBusinesses() {
       data: { embedding: vec as any },
     });
   }
+  console.log(`🧠 Embedded ${all.length} businesses`);
 }
 
-  // админ нууц үг hash
-  const adminPassHash = await bcrypt.hash('Admin123!', 10);
+async function main() {
+  console.log('🌱 Starting full reset & seeding...');
 
+  // Админ/юзер үүсгэх (жишээ)
+  const adminPassHash = await bcrypt.hash('Admin123!', 10);
   await prisma.user.upsert({
     where: { email: 'admin@example.com' },
     update: { role: Role.admin, name: 'Admin', passwordHash: adminPassHash },
@@ -44,23 +44,23 @@ async function embedAllBusinesses() {
       passwordHash: adminPassHash,
     },
   });
-await prisma.user.upsert({
-  where: { email: 'user@example.com' },
-  update: {},
-  create: {
-    email: 'user@example.com',
-    name: 'Regular User',
-    role: Role.user,
-    image: null,
-  },
-});
+  await prisma.user.upsert({
+    where: { email: 'user@example.com' },
+    update: {},
+    create: {
+      email: 'user@example.com',
+      name: 'Regular User',
+      role: Role.user,
+      image: null,
+    },
+  });
 
-  // --- 0. Хуучин бүх өгөгдлийг устгах ---
+  // 0. Хуучин өгөгдөл устгах
   await prisma.business.deleteMany();
   await prisma.category.deleteMany();
   console.log('🧹 Old data cleared');
 
-  // --- 1. Category үүсгэх ---
+  // 1. Category-ууд
   const categories = [
     { id: '1', name: 'Ресторан' },
     { id: '2', name: 'Номын сан' },
@@ -68,19 +68,17 @@ await prisma.user.upsert({
     { id: '4', name: 'Дэлгүүр' },
     { id: '5', name: 'Эмнэлэг' },
   ];
-
-  for (const c of categories) {
-    await prisma.category.create({ data: c });
-  }
+  for (const c of categories) await prisma.category.create({ data: c });
   console.log('📁 Categories inserted');
 
-  // --- 2. Category-уудыг авч, холбоход ашиглая ---
+  // 2. Category-уудыг авах
   const restaurant = await prisma.category.findUnique({ where: { id: '1' } });
   const lib = await prisma.category.findUnique({ where: { id: '2' } });
   const bank = await prisma.category.findUnique({ where: { id: '3' } });
   const shopping = await prisma.category.findUnique({ where: { id: '4' } });
   const hospital = await prisma.category.findUnique({ where: { id: '5' } });
-  // --- 3. Бизнесийн массивууд ---
+
+  // 3. Dummy бизнесүүд
   const restaurants = [
     {
       name: 'Modern nomads',
@@ -265,7 +263,7 @@ await prisma.user.upsert({
       timetable: '09:00–18:00',
       rating: 5,
       topRating: true,
-       latitude: 47.9116,
+      latitude: 47.9116,
       longitude: 106.9055,
       logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/undesniiNomiinSan.jpg',
     },
@@ -298,7 +296,7 @@ await prisma.user.upsert({
       location: 'Улаанбаатар',
       timetable: '09:00–18:00',
       topRating: true,
-      latitude: 47.91694470102964, 
+      latitude: 47.91694470102964,
       longitude: 106.90611974425805,
       rating: 5,
       logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/ulsiinIhDelguur.jpg',
@@ -316,50 +314,44 @@ await prisma.user.upsert({
       timetable: '09:00–18:00',
       rating: 5,
       topRating: false,
-       latitude: 47.9440,
+      latitude: 47.9440,
       longitude: 106.9120,
       logoUrl: 'https://yellow-s3sodon.s3.us-east-1.amazonaws.com/ehnylhas.jpg',
     },
   ];
 
-
-    // --- handy coords generator (UB around center, small deterministic offsets) ---
+  // Coords helper
   function genCoords(index: number, baseLat = 47.918209, baseLng = 106.917199) {
-    // small spread using index to avoid exact overlap
     const step = 0.0025;
     const lat = baseLat + ((index % 7) - 3) * step + ((index % 3) * 0.0005);
     const lng = baseLng + (Math.floor(index / 7) - 3) * step + ((index % 5) * 0.0006);
     return { lat, lng };
   }
 
-
-
-  // --- 4. Тус бүрийн бизнес үүсгэх функц ---
-  async function insertBusinesses(
-    items: any[],
-    categoryId: string,
-    categoryName: string
-  ) {
- const data = items.map((item, idx) => {
+  // 4. Insert helper
+  async function insertBusinesses(items: any[], categoryId: string, categoryName: string) {
+    const data = items.map((item: any, idx: number) => {
       const coords = genCoords(idx);
       return {
         ...item,
         categoryId,
-        // only add if not already provided in item
         latitude: item.latitude ?? coords.lat,
         longitude: item.longitude ?? coords.lng,
       };
     });
-
     await prisma.business.createMany({ data });
-   console.log(`✅ Inserted ${items.length} ${categoryName} businesses (with coords)`);
-   }
+    console.log(`✅ Inserted ${items.length} ${categoryName} businesses (with coords)`);
+  }
 
+  // 5. Insert all
   await insertBusinesses(restaurants, restaurant!.id, 'Restaurant');
   await insertBusinesses(libraries, lib!.id, 'Library');
   await insertBusinesses(banks, bank!.id, 'Bank');
   await insertBusinesses(shoppings, shopping!.id, 'Shopping');
   await insertBusinesses(hospitals, hospital!.id, 'Hospital');
+
+  // 6. Embeddings — ОРУУЛСНЫ ДАРАА тооцоолно
+  await embedAllBusinesses();
 
   console.log('🌱 Seeding completed successfully!');
 }
@@ -372,7 +364,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-function embedAllBusinesses() {
-  throw new Error('Function not implemented.');
-}
-

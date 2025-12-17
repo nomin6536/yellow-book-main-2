@@ -1,7 +1,5 @@
 import { Suspense } from 'react';
 import type { Business, Category } from '@yellow/contract';
-import LoginButton from './components/LoginButton';
-import LogoutButton from './components/LogoutButton';
 import { getServerSession } from 'next-auth';
 import { authOptions } from './api/auth/[...nextauth]/route';
 import AllBusinessesMarquee from './components/AllBusinesses';
@@ -44,20 +42,7 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen w-full bg-gradient-to-b from-[#201235] via-[#2b1940] to-[#4b2f7a] text-white">
-      <header className="max-w-6xl mx-auto flex items-center justify-between py-8 px-6">
-        <div className="text-2xl font-semibold tracking-wider">ТАНИЛ</div>
-        {session ? (
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-white/80">
-              {session.user?.name ?? session.user?.email}
-            </span>
-            {/* Админ бол badge харуулахыг хүсвэл: (session as any)?.role === 'admin' */}
-            <LogoutButton />
-          </div>
-        ) : (
-          <LoginButton />
-        )}
-      </header>
+      <header/>
 
       <main className="px-6">
         <div className="max-w-4xl mx-auto text-center mt-8">

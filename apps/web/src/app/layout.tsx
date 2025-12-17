@@ -1,4 +1,9 @@
+import AuthProvider from './components/AuthProvider';
+import Header from './components/header';
 import './global.css';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Welcome to web',
@@ -12,7 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <body>{children}</body>
+   <body className={inter.className}>
+        <AuthProvider>
+          <Header />
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }
